@@ -14,7 +14,7 @@ class Parser():
             pages = dict_resp['search_results']['paginator']['num_pages'] # кількість сторінок у результаті
             result = dict_resp['search_results']['object_list'] # формуємо список даних про фірми
             if pages > 1: # якщо результати запиту не вмістилися на одну сторінку (не віддасть більше 1000 сторінок?)
-                for i in range(2, pages+1): # повторюємо запит для всіх сторінок, починаючи з другої
+                for i in range(2, pages + 1): # повторюємо запит для всіх сторінок, починаючи з другої
                     url = 'https://ring.org.ua/search?q=' + self.obj + '&datasources=edrdr&format=json&page=' + str(i)
                     response = requests.get(url) # надсилаємо get-запит на сервер ring.org.ua
                     #response = requests.get(url, verify=False) # якщо матюкається на SSL-сертифікат
@@ -35,6 +35,6 @@ class Parser():
 
 # testing
 if __name__ == '__main__':
-    parser = Parser('41133715') # "Бон Буассон"
-    #parser = Parser('31382665') # "Сигарний Дім 'Фортуна'"
+    parser = Parser('36492837') # "ТОВ 'Бон Буассон Беверідж'"
+    #parser = Parser('бон буассон беверідж')
     print(parser.getData())

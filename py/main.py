@@ -40,7 +40,8 @@ def nodes_degree(g):
         g.nodes[i]['degree'] = dct[i]
     return g
 
-def main(start, level):
+def main(start, level, oblast=False): 
+    # oblast -- чи треба здійснювати пошук заснованих фірм при спільному П.І.Б. лише в межах однієї області
     # задаємо початкові значення словників та списків
     dict_find = dict() # словник знайдених контрагентів
     dict_firm = dict() # словник назва фірми --> ЄДРПОУ
@@ -49,6 +50,7 @@ def main(start, level):
     list_temp = [] # список контрагентів на поточному рівні
     list_next = [] # список контрагентів наступного рівня -- кортежі: назва фірми або П.І.Б., регіон (-1 для фірми)
     i = 0 # лічильник (номер рівня відносно початкового об'єкта)
+    
     # запускаємо процес (цикл із передумовою, обмеження за кількістю рівнів)
     list_next.append((start, 0)) # 0 -- для вказівки на те, що нам не важливо, з якого регіону дана фірма
     while (i < level) and (len(list_next) > 0):
@@ -72,11 +74,12 @@ def main(start, level):
                         else: # а тут додаємо третім аргументом ще й адресу засновника
                             processor = Processor(list_obj[n], obj[1], obj[2]) # ініціюємо обробник картки фірми
                         dict_find, dict_firm, list_type, list_head, list_next = processor.addCardData(
-                            dict_find, dict_firm, list_type, list_head, list_temp, list_next) # обробляємо картку
+                            dict_find, dict_firm, list_type, list_head, list_temp, list_next, oblast) # обробляємо картку
             else:
                 if resp[1] == ['error']:
                     print('Error request for object = ', obj[0])
         i += 1
+        
     # після формування словників та списків здійснюємо їх обробку, формуємо граф і записуємо його до json-файлу
     G = {"directed": True, "multigraph": True, "graph": {}}
     df_types = pd.DataFrame(list_type, columns=['Founder', 'EDRPOU', 'Founder_part', 'Is_benef'])
@@ -149,4 +152,4 @@ def main(start, level):
     
 # testing
 if __name__ == '__main__':
-    main('31382665', 3)
+    main('36492837', 3)

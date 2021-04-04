@@ -10,7 +10,7 @@
   <body>
     <header>
       <div class="container">
-        <h1 class="header-main">Пошук взаємозв'язків</h1>
+        <h1 class="header-main">Пошук зв'язків</h1>
       </div>
     </header>
 
@@ -24,10 +24,6 @@
               ЄДРПОУ юрособи
             </label>
             <label class="characteristic">
-              <input name="property" type="radio" value="ipn" />
-              ІПН фізособи
-            </label>
-            <label class="characteristic">
               <input name="property" type="radio" value="firm" />
               Назва юрособи
             </label>
@@ -37,209 +33,18 @@
             </label>
           </div>
           <label>
-            Введіть значення характеристики:
-            <!--<input type="text" id="ajax" list="group" name="group" placeholder="FORTUNA"/>-->
+            Введіть її значення:
             <input type="text" name="value" />
+            та рівень пошуку:
+            <input type="text" name="level" />
             <button type="submit">Знайти</button>
           </label>
-          <!--<datalist id="group">
-            <script type="text/javascript" src="../js/datalist.js"></script>
-            <option>FULL_GRAPH</option>
-            <option>AHART</option>
-            <option>FORTUNA</option>
-            <option>KIM</option>
-            <option>MADZHESTIK</option>
-            <option>RISOIL</option>
-            <option>TIS</option>
-            <option>TRANS_SERVICE_and_СКМ</option>
-          </datalist>-->
         </form>
-        <!--<section class="methods">
-          <p class="editor">Редагувати зв'язки</p>
-          <ul class="block-button">
-            <button class="buttons" type="button" add-item-open>Додати контрагента</button>
-            <button class="buttons" type="button" add-link-open>Додати зв'язок</button>
-            <button class="buttons" type="button" remove-item-open>Видалити контрагента</button>
-            <button class="buttons" type="button" remove-link-open>Видалити зв'язок</button>
-            <button class="buttons" type="button" change-link-open>Змінити зв'язок</button>
-            <button class="buttons" type="button">Зберегти зміни</button>
-          </ul>
-        </section>-->
       </div>
       <div class="container">
         <svg width="1200" height="800"></svg>
         <script type="text/javascript" src="./js/visual.js"></script>
       </div>
     </main>
-
-    <div class="backdrop is-hidden" add-item>
-    <!-- Назва групи має записуватися в змінну ще під час пошуку -->
-      <div class="modal relative">
-          <button class="close" add-item-close><span class="x">X</span></button>
-          <form class="modal-form">
-              <p class="modal-text">Введіть необхідні дані</p>
-              <label class="modal-label">
-                  <p class="label-text">Назва фірми (або П.І.Б.)</p>
-                  <input class="modal-input" type="text" name="name" placeholder=""/>
-              </label>
-              <label class="modal-label">
-                  <p class="label-text">ЄДРПОУ (або ІПН)</p>
-                  <input class="modal-input" type="text" list="okpo" name="side" placeholder=""/>
-              </label>
-              <button class="buttons" type="submit">
-                  <span class="text-submit">Додати контрагента</span>
-              </button>
-              <datalist id="okpo">
-                <!--<script type="text/javascript" src="../js/agent-list.js"></script>-->
-              </datalist>
-          </form>
-      </div>
-    </div>
-
-    <div class="backdrop is-hidden" add-link>
-      <div class="modal relative">
-          <button class="close" add-link-close><span class="x">X</span></button>
-          <form class="modal-form">
-              <p class="modal-text">Введіть необхідні дані</p>
-              <label class="modal-label">
-                  <p class="label-text">Контрагент 1</p>
-                  <input class="modal-input" type="text" list="agents" name="agent-output" placeholder=""/>
-              </label>
-              <label class="modal-label">
-                  <p class="label-text">Контрагент 2</p>
-                  <input class="modal-input" type="text" list="agents" name="agent-input" placeholder=""/>
-              </label>
-              <label class="modal-label">
-                  <p class="label-text">Тип зв'язку</p>
-                  <input class="modal-input" type="text" list="links" name="link-type" placeholder=""/>
-              </label>
-              <button class="buttons" type="submit">
-                  <span class="text-submit">Додати зв'язок</span>
-              </button>
-              <datalist id="agents">
-                <!--<script type="text/javascript" src="../js/agent-list.js"></script>-->
-              </datalist>
-              <datalist id="links">
-                <option>strong</option>
-                <option>medium</option>
-                <option>weak</option>
-                <option>head</option>
-                <option>family</option>
-                <option>address</option>
-                <option>business</option>
-                <option>guarantor</option>
-                <option>filia</option>
-                <option>unknown</option>
-              </datalist>
-          </form>
-      </div>
-    </div>
-
-    <div class="backdrop is-hidden" remove-item>
-      <div class="modal relative">
-          <button class="close" remove-item-close><span class="x">X</span></button>
-          <form class="modal-form">
-              <p class="modal-text">Введіть необхідні дані</p>
-              <label class="modal-label">
-                  <p class="label-text">Контрагент</p>
-                  <input class="modal-input" type="text" list="agents" name="agent" placeholder=""/>
-              </label>
-              <button class="buttons" type="submit">
-                <span class="text-submit">Видалити контрагента</span>
-              </button>
-              <datalist id="agents">
-                <!--<script type="text/javascript" src="../js/okpo-list.js"></script>-->
-              </datalist>
-          </form>
-      </div>
-    </div>
-
-    <div class="backdrop is-hidden" remove-link>
-      <div class="modal relative">
-          <button class="close" remove-link-close><span class="x">X</span></button>
-          <form class="modal-form">
-              <p class="modal-text">Введіть необхідні дані</p>
-              <label class="modal-label">
-                  <p class="label-text">Контрагент 1</p>
-                  <input class="modal-input" type="text" list="agents" name="agent-output" placeholder=""/>
-              </label>
-              <label class="modal-label">
-                  <p class="label-text">Контрагент 2</p>
-                  <input class="modal-input" type="text" list="agents" name="agent-input" placeholder=""/>
-              </label>
-              <label class="modal-label">
-                  <p class="label-text">Тип зв'язку</p>
-                  <input class="modal-input" type="text" list="links" name="link-type" placeholder=""/>
-              </label>
-              <button class="buttons" type="submit">
-                  <span class="text-submit">Видалити зв'язок</span>
-              </button>
-              <datalist id="agents">
-                <!--<script type="text/javascript" src="../js/agent-list.js"></script>-->
-              </datalist>
-              <datalist id="links">
-                <option>strong</option>
-                <option>medium</option>
-                <option>weak</option>
-                <option>head</option>
-                <option>family</option>
-                <option>address</option>
-                <option>business</option>
-                <option>guarantor</option>
-                <option>filia</option>
-                <option>unknown</option>
-              </datalist>
-          </form>
-      </div>
-    </div>
-
-    <div class="backdrop is-hidden" change-link>
-      <div class="modal relative">
-          <button class="close" change-link-close><span class="x">X</span></button>
-          <form class="modal-form">
-              <p class="modal-text">Введіть необхідні дані</p>
-              <label class="modal-label">
-                  <p class="label-text">Контрагент 1</p>
-                  <input class="modal-input" type="text" list="agents" name="agent-output" placeholder=""/>
-              </label>
-              <label class="modal-label">
-                  <p class="label-text">Контрагент 2</p>
-                  <input class="modal-input" type="text" list="agents" name="agent-input" placeholder=""/>
-              </label>
-              <label class="modal-label">
-                  <p class="label-text">Тип старого зв'язку</p>
-                  <input class="modal-input" type="text" list="links" name="link-old" placeholder=""/>
-              </label>
-              <label class="modal-label">
-                  <p class="label-text">Тип нового зв'язку</p>
-                  <input class="modal-input" type="text" list="links" name="link-new" placeholder=""/>
-              </label>
-              <button class="buttons" type="submit">
-                  <span class="text-submit">Змінити зв'язок</span>
-              </button>
-              <datalist id="agents">
-                <!--<script type="text/javascript" src="../js/agent-list.js"></script>-->
-              </datalist>
-              <datalist id="links">
-                <option>strong</option>
-                <option>medium</option>
-                <option>weak</option>
-                <option>head</option>
-                <option>family</option>
-                <option>address</option>
-                <option>business</option>
-                <option>guarantor</option>
-                <option>filia</option>
-                <option>unknown</option>
-              </datalist>
-          </form>
-      </div>
-    </div>
-
-  <script src="../js/modal-add-item.js"></script>
-  <script src="../js/modal-add-link.js"></script>
-  <script src="../js/modal-remove-item.js"></script>
-  <script src="../js/modal-remove-link.js"></script>
-  <script src="../js/modal-change-link.js"></script>
   </body>
 </html>

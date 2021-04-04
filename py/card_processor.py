@@ -1,5 +1,3 @@
-from ring_parser import Parser # for testing only 
-
 def reg(loc): # визначаємо номер регіону за повною адресою фірми
     if (loc.find('київська область') != -1) or (loc.find('київська обл.') != -1):
         return 1
@@ -68,12 +66,12 @@ def find_addr(addresses_cut, records_cut, person): # знаходимо спис
 
 class Processor():
     def __init__(self, firm, info=0, list_addr=None):
-        self.firm = firm
-        self.info = info
-        self.list_addr = list_addr
+        self.firm = firm # словник усіх даних із картки фірми, знайденої за певним ЗАПИТОМ 
+        self.info = info # назва фірми в ЗАПИТІ (str) або номер області, у якій вона знаходиться (int)
+        self.list_addr = list_addr # адреса фізособи, вказаної в ЗАПИТІ (засновника знайденої фірми)
         
-    def addCardData(self, dict_find, dict_firm, list_type, list_head, list_temp, list_next):
-        next_step = False
+    def addCardData(self, dict_find, dict_firm, list_type, list_head, list_temp, list_next, oblast): #обробка картки даних фірми
+        next_step = False # за замовчуванням дані про цю фірму не додаємо
         # додаємо фірму до словника знайдених контрагентів
         edrpou = self.firm['full_edrpou']
         name = self.firm['latest_record']['name'].lower().replace('  ', ' ')
@@ -81,13 +79,13 @@ class Processor():
         status = self.firm['latest_record']['status'].lower().replace('  ', ' ') 
         dict_find[edrpou] = (name, short_name, status) # додаємо інформацію про фірму: назва, повна назва, статус
         dict_firm[name] = edrpou # якщо будуть дублі за повною назвою фірми, то запишеться лише останній ЄДРПОУ!
-        if status != 'припинено': # якщо фірма функціонує
-            try:
+        if status != 'припинено': # дані про фірми зі статусом 'припинено' не додаємо
+            try: # якщо фірма функціонує, виконуємо три перевірки
                 records = self.firm['raw_records'] # тут міститься інформація про частки участі засновників (у грн.)
+                location = self.firm['latest_record']['location'].lower().replace('  ', ' ')
+                region = reg(location) # знаходимо регіон, де розташована фірма
                 if type(self.info) == str: # перевірка № 1 -- за співпадінням назв фірм
-                    if self.info in [record.split(',')[0].lower().replace('  ', ' ') for record in records]:
-                        location = self.firm['latest_record']['location'].lower().replace('  ', ' ')
-                        region = reg(location) # знаходимо регіон, де розташована фірма
+                    if self.info in [record.split(',')[0].lower().replace('  ', ' ') for record in records]: 
                         next_step = True
                 else: # перевірка № 2 -- за співпадінням адрес при спільному П.І.Б. бенефіціарів
                     if self.list_addr != None and len(list([person[0] for person in self.firm['raw_persons'] 
@@ -96,14 +94,10 @@ class Processor():
                             if not next_step:
                                 for record in records: # для кожного запису про частку участі засновника
                                     if record.lower().replace(' ', '').replace('-', '').find(addr) != -1: # адреси співпали
-                                        location = self.firm['latest_record']['location'].lower().replace('  ', ' ')
-                                        region = reg(location) # знаходимо регіон, де розташована фірма
                                         next_step = True
                                         break
                     else: # перевірка № 3 -- за співпадінням регіонів фірм при спільному П.І.Б. засновників
-                        location = self.firm['latest_record']['location'].lower().replace('  ', ' ')
-                        region = reg(location) # знаходимо регіон, де розташована фірма
-                        if (self.info == 0) or (self.info == region): # фірми з іншого регіону не розглядаємо (однофамільці?)
+                        if (not oblast) or (self.info == 0) or (self.info == region): # фірми з іншої області не розглядаємо
                             next_step = True
             except:
                 print('Warning: Detail information about firm {0} is absend, status = {1}.'.format(edrpou, status))
@@ -146,22 +140,23 @@ class Processor():
                     list_head.append([head, edrpou])
                 part = dict()
                 for record in records: # відбираємо інформацію тільки про ненульові внески
-                    if (record.find(' грн.')!=-1) and (record.find(' 0.00 грн.')==-1) and (record.find(' 0,00 грн.')==-1):
+                    if (record.find(' грн.') != -1) and (record.find(' 0.00 грн.') == -1) and (record.find(' 0,00 грн.') == -1):
                         part[record.split(',')[0].lower().replace('  ', ' ')] = float(
                             record.split('-')[-1].split('грн')[0].strip().replace(',', '.')) # засновник і його внесок
                 if len(part) > 0: # якщо є інформація хоча б про один ненульовий внесок до статутного капіталу
                     capital = sum(part.values())
                     for founder in list(part):
+                        capital_part = part[founder]/capital if capital != 0 else 0
                         if founder in list_all: # засновник -- фізична особа
                             if founder in list_benef: # засновник є бенефіціаром
-                                list_type.append([founder, edrpou, part[founder]/capital, 1])
+                                list_type.append([founder, edrpou, capital_part, 1])
                             else: # засновник не є бенефіціаром
-                                list_type.append([founder, edrpou, part[founder]/capital, 0])
+                                list_type.append([founder, edrpou, capital_part, 0])
                         else: # засновник -- юридична особа (фірма)
                             if founder in list(dict_firm): # і для цієї фірми ми вже маємо інформації про її ЄДРПОУ
-                                list_type.append([dict_firm[founder], edrpou, part[founder]/capital, 0])
+                                list_type.append([dict_firm[founder], edrpou, capital_part, 0])
                             else: # інакше записуємо просто назву фірми
-                                list_type.append([founder, edrpou, part[founder]/capital, 0])
+                                list_type.append([founder, edrpou, capital_part, 0])
                 # якщо бенефіціар не вносив кошти до статутного капіталу, додаємо інформацію про нього
                 zero_benef = list(set(list_benef) - set(list(part)))
                 if len(zero_benef) > 0:
@@ -177,10 +172,12 @@ class Processor():
     
 # testing
 if __name__ == '__main__':
-    start = '41133715' # "Бон Буассон"
+    from ring_parser import Parser # for testing only 
+    start = '36492837' # "Бон Буассон"
     parser = Parser(start)
-    processor = Processor(parser.getData()[1][0])
-    result = processor.addCardData(dict(), dict(), [], [], [(start, 0)], [])
+    processor = Processor(parser.getData()[1][0]) # для прикладу беремо першу зі списку знайдених фірм
+    # на вхід подаємо dict_find, dict_firm, list_type, list_head, list_temp, list_next
+    result = processor.addCardData(dict(), dict(), [], [], [(start, 0)], [], False)
     print('Dict_find: ', result[0])
     print('Dict_firm: ', result[1])
     print('List_type: ', result[2])

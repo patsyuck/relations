@@ -43,8 +43,8 @@ d3.json("../json/graph.json", function (error, graph) {
         .data(graph.nodes)
         .enter().append("circle")
         .attr("cursor", "pointer")
-        .attr("r", degree)
-        /*.attr("r", 5)*/
+        /*.attr("r", degree)*/
+        .attr("r", 5)
         .attr("fill", colour)
         .attr("stroke", "black")
         .attr("stroke-width", 2)
