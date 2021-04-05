@@ -144,12 +144,11 @@ def main(start, level, oblast=False):
         links.append({'source': int(df_type['source'][i]), 'target': int(df_type['target'][i]), 
                       'color': df_type['color'][i], 'key': int(df_type['key'][i])})
     G["links"] = links
-    write_json(G, '../json/graph.json', graph=False)
-    G = read_json('../json/graph.json')
+    G = node_link_graph(G, directed=True)
     G = nodes_degree(G)
     write_json(G, '../json/graph.json')
     
     
 # testing
 if __name__ == '__main__':
-    main('36492837', 3)
+    main('36492837', 2)

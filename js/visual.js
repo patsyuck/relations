@@ -105,7 +105,7 @@ d3.json("../json/graph.json", function (error, graph) {
         .attr("width", function(d) { return d.rectWidth; });*/
 
     // видимий текст, який починається в центрі вузла            
-    /*var myText = svg.selectAll(".mytext")
+    var myText = svg.selectAll(".mytext")
         .data(graph.nodes)
         .enter().append("text")
         .style("fill", "#0000ff")
@@ -114,7 +114,7 @@ d3.json("../json/graph.json", function (error, graph) {
                 return d.name
             else
                 return d.name + " (" + d.edrpou + ")"
-        });*/
+        });
 
     // видимий текст, який відцентровано по центру вузла
     /*var text = svg.append("g")
