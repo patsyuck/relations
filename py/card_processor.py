@@ -1,51 +1,51 @@
 def reg(loc): # визначаємо номер регіону за повною адресою фірми
-    if (loc.find('київська область') != -1) or (loc.find('київська обл.') != -1):
+    if loc.find('київська обл') != -1:
         return 1
-    elif (loc.find('дніпропетровська область') != -1) or (loc.find('дніпропетровська обл.') != -1):
+    elif loc.find('дніпропетровська обл') != -1:
         return 2
-    elif (loc.find('донецька область') != -1) or (loc.find('донецька обл.') != -1):
+    elif loc.find('донецька обл') != -1:
         return 3
-    elif (loc.find('харківська область') != -1) or (loc.find('харківська обл.') != -1):
+    elif loc.find('харківська обл') != -1:
         return 4
-    elif (loc.find('одеська область') != -1) or (loc.find('одеська обл.') != -1):
+    elif loc.find('одеська обл') != -1:
         return 5
-    elif (loc.find('львівська область') != -1) or (loc.find('львівська обл.') != -1):
+    elif loc.find('львівська обл') != -1:
         return 6
-    elif (loc.find('миколаївська область') != -1) or (loc.find('миколаївська обл.') != -1):
+    elif loc.find('миколаївська обл') != -1:
         return 7
-    elif (loc.find('запорізька область') != -1) or (loc.find('запорізька обл.') != -1):
+    elif loc.find('запорізька обл') != -1:
         return 8
-    elif (loc.find('хмельницька область') != -1) or (loc.find('хмельницька обл.') != -1):
+    elif loc.find('хмельницька обл') != -1:
         return 9
-    elif (loc.find('полтавська область') != -1) or (loc.find('полтавська обл.') != -1):
+    elif loc.find('полтавська обл') != -1:
         return 10
-    elif (loc.find('луганська область') != -1) or (loc.find('луганська обл.') != -1):
+    elif loc.find('луганська обл') != -1:
         return 11
-    elif (loc.find('вінницька область') != -1) or (loc.find('вінницька обл.') != -1):
+    elif loc.find('вінницька обл') != -1:
         return 12
-    elif (loc.find('житомирська область') != -1) or (loc.find('житомирська обл.') != -1):
+    elif loc.find('житомирська обл') != -1:
         return 13
-    elif (loc.find('черкаська область') != -1) or (loc.find('черкаська обл.') != -1):
+    elif loc.find('черкаська обл') != -1:
         return 14
-    elif (loc.find('херсонська область') != -1) or (loc.find('херсонська обл.') != -1):
+    elif loc.find('херсонська обл') != -1:
         return 15
-    elif (loc.find('кіровоградська область') != -1) or (loc.find('кіровоградська обл.') != -1):
+    elif loc.find('кіровоградська обл') != -1:
         return 16
-    elif (loc.find('сумська область') != -1) or (loc.find('сумська обл.') != -1):
+    elif loc.find('сумська обл') != -1:
         return 17
-    elif (loc.find('івано-франківська область') != -1) or (loc.find('івано-франківська обл.') != -1):
+    elif loc.find('івано-франківська обл') != -1:
         return 18
-    elif (loc.find('тернопільська область') != -1) or (loc.find('тернопільська обл.') != -1):
+    elif loc.find('тернопільська обл') != -1:
         return 19
-    elif (loc.find('чернігівська область') != -1) or (loc.find('чернігівська обл.') != -1):
+    elif loc.find('чернігівська обл') != -1:
         return 20
-    elif (loc.find('волинська область') != -1) or (loc.find('волинська обл.') != -1):
+    elif loc.find('волинська обл') != -1:
         return 21
-    elif (loc.find('рівненська область') != -1) or (loc.find('рівненська обл.') != -1):
+    elif loc.find('рівненська обл') != -1:
         return 22
-    elif (loc.find('закарпатська область') != -1) or (loc.find('закарпатська обл.') != -1):
+    elif loc.find('закарпатська обл') != -1:
         return 23
-    elif (loc.find('чернівецька область') != -1) or (loc.find('чернівецька обл.') != -1):
+    elif loc.find('чернівецька обл') != -1:
         return 24
     elif (loc.find('республіка крим') != -1) or (loc.find(' арк ') != -1) or (loc.find(' арк,') != -1):
         return 25
